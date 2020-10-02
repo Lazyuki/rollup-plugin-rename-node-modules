@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "allowJs": false,
+    "esModuleInterop": true,
+    "isolatedModules": false,
+    "module": "ES6",
+    "moduleResolution": "Node",
+    "strict": true,
+    "target": "es2018",
+    "declaration": true
+  },
+  "include": ["src"]
+}
