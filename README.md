@@ -41,18 +41,6 @@ export default {
 
 It takes a string and will rename files and mentions of `node_module` to the provided string. By default it's `external`.
 
-### Examples:
+### Credit
 
-#### Before
-
-```js
-// src/components/DatePicker.js
-import datePicker from 'third-party-date-picker';
-import 'third-party-date-picker/dist/styles.css';
-
-... some code
-
-
-// tra
-
-```
+Base idea taken from https://github.com/GiG/rollup-plugin-rename-extensions
