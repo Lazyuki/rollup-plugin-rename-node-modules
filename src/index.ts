@@ -88,6 +88,12 @@ const plugin = (moduleName: string = "external"): Plugin => {
           }
         }
       });
+      for (const fileName of changedFiles) {
+        const file = bundle[fileName];
+        const newFileName = file.fileName;
+        delete bundle[fileName];
+        bundle[newFileName] = file;
+      }
     },
   };
 };
