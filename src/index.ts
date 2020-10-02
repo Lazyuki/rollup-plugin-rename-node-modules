@@ -70,11 +70,8 @@ const plugin = (moduleName: string = "external"): Plugin => {
                   const req: any =
                     getRequireSource(node) || getImportSource(node);
 
-                  if (req) {
+                  if (req && req.value.includes("node_modules")) {
                     const { start, end } = req;
-                    if (req.value.includes("node_modules")) {
-                      console.log(node);
-                    }
                     const newPath = req.value.replace(
                       "node_modules",
                       moduleName
