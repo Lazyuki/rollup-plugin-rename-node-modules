@@ -1,6 +1,6 @@
 {
   "name": "rollup-plugin-rename-node-modules",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "A Rollup plugin to rename the `node_modules` created when bundling some external libries while using preserveModules",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
