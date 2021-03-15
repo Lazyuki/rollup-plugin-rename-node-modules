@@ -52,7 +52,7 @@ const plugin = (moduleName: string = "external"): Plugin => {
       const changedFiles: string[] = [];
       Object.entries(bundle).forEach(([fileName, chunkInfo]) => {
         if (fileName.includes("node_modules")) {
-          const newFileName = fileName.replace("node_modules", moduleName);
+          const newFileName = fileName.replace(/node_modules/g, moduleName);
           chunkInfo.fileName = newFileName;
           changedFiles.push(fileName);
         }
@@ -72,10 +72,7 @@ const plugin = (moduleName: string = "external"): Plugin => {
 
                   if (req && req.value.includes("node_modules")) {
                     const { start, end } = req;
-                    const newPath = req.value.replace(
-                      "node_modules",
-                      moduleName
-                    );
+                    const newPath = req.value.replace(/node_modules/g, moduleName);
 
                     magicString.overwrite(start, end, `'${newPath}'`);
                   }
