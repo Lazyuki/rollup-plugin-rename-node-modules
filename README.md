@@ -41,6 +41,12 @@ export default {
 
 It takes a string and will rename files and mentions of `node_module` to the provided string. By default it's `external`.
 
+It has optional second parameter `sourceMap` which defaults to `true` and can disable source map generation:
+
+```js
+plugins: [renameNodeModules("ext", false)]
+```
+
 ### Credit
 
 Base idea taken from https://github.com/GiG/rollup-plugin-rename-extensions
