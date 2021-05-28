@@ -45,7 +45,7 @@ function getImportSource(node: any): Node | false {
 
 const importNodeTypes = [NodeType.ImportDeclaration, NodeType.CallExpression];
 
-const plugin = (moduleName: string = "external"): Plugin => {
+const plugin = (moduleName: string = "external", sourceMaps = true): Plugin => {
   return {
     name: "rename-external-node-modules",
     generateBundle(_, bundle) {
@@ -80,7 +80,9 @@ const plugin = (moduleName: string = "external"): Plugin => {
               },
             });
 
-            chunkInfo.map = magicString.generateMap();
+            if (sourceMaps) {
+              chunkInfo.map = magicString.generateMap();
+            }
             chunkInfo.code = magicString.toString();
           }
         }
