@@ -60,7 +60,7 @@ const plugin = (moduleName: string = "external"): Plugin => {
           if (chunkInfo.imports.some((i) => i.includes("node_modules"))) {
             const magicString = new MagicString(chunkInfo.code);
             const ast = this.parse(chunkInfo.code, {
-              ecmaVersion: 6,
+              ecmaVersion: "latest",
               sourceType: "module",
             });
 
