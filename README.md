@@ -39,9 +39,9 @@ export default {
 };
 ```
 
-It takes a string and will rename files and mentions of `node_module` to the provided string. By default it's `external`.
+It takes a string and will rename files and mentions of `node_module` to the provided string. By default it's `external`. Since v1.3.0, you can also pass in a function that takes a `string` and returns a `string`.
 
-It has optional second parameter `sourceMap` which defaults to `true` and can disable source map generation:
+It has an optional second parameter `sourceMap` which defaults to `true` and can disable source map generation:
 
 ```js
 plugins: [renameNodeModules("ext", false)]
