@@ -2,6 +2,7 @@ import { Plugin } from "rollup";
 import { Node } from "estree";
 import { walk } from "estree-walker";
 import MagicString from "magic-string";
+import { posix as path } from "path";
 
 enum NodeType {
   Literal = "Literal",
@@ -45,14 +46,21 @@ function getImportSource(node: any): Node | false {
 
 const importNodeTypes = [NodeType.ImportDeclaration, NodeType.CallExpression];
 
-const plugin = (moduleName: string = "external", sourceMaps = true): Plugin => {
+const plugin = (
+  moduleName: string | ((fileName: string) => string) = "external",
+  sourceMaps = true
+): Plugin => {
+  const replace =
+    typeof moduleName === "string"
+      ? (fileName: string) => fileName.replace(/node_modules/g, moduleName)
+      : moduleName;
   return {
     name: "rename-external-node-modules",
     generateBundle(_, bundle) {
       const changedFiles: string[] = [];
       Object.entries(bundle).forEach(([fileName, chunkInfo]) => {
         if (fileName.includes("node_modules")) {
-          const newFileName = fileName.replace(/node_modules/g, moduleName);
+          const newFileName = replace(fileName);
           chunkInfo.fileName = newFileName;
           changedFiles.push(fileName);
         }
@@ -72,7 +80,15 @@ const plugin = (moduleName: string = "external", sourceMaps = true): Plugin => {
 
                   if (req && req.value.includes("node_modules")) {
                     const { start, end } = req;
-                    const newPath = req.value.replace(/node_modules/g, moduleName);
+                    // compute a new path relative to the bundle root
+                    const bundlePath = replace(
+                      path.join(path.dirname(fileName), req.value)
+                    );
+                    // and then format the path relative the updated chunk path
+                    const newPath = path.relative(
+                      path.dirname(chunkInfo.fileName),
+                      bundlePath
+                    );
 
                     magicString.overwrite(start, end, `'${newPath}'`);
                   }
