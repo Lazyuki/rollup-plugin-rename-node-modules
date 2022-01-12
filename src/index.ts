@@ -90,7 +90,12 @@ const plugin = (
                       bundlePath
                     );
 
-                    magicString.overwrite(start, end, `'${newPath}'`);
+                    // add ./ to project root files
+                    const newRelativePath = newPath.startsWith("./")
+                      ? newPath
+                      : `./${newPath}`;
+
+                    magicString.overwrite(start, end, `'${newRelativePath}'`);
                   }
                 }
               },
