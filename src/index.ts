@@ -84,18 +84,19 @@ const plugin = (
                     const bundlePath = replace(
                       path.join(path.dirname(fileName), req.value)
                     );
-                    // and then format the path relative the updated chunk path
+                    // and then format the path relative to the updated chunk path
                     const newPath = path.relative(
                       path.dirname(chunkInfo.fileName),
                       bundlePath
                     );
 
-                    // add ./ to project root files
-                    const newRelativePath = newPath.startsWith("./")
-                      ? newPath
-                      : `./${newPath}`;
+                    // add ./ to files relative to project root
+                    const normalizedPath =
+                      newPath.startsWith("./") || newPath.startsWith("../")
+                        ? newPath
+                        : `./${newPath}`;
 
-                    magicString.overwrite(start, end, `'${newRelativePath}'`);
+                    magicString.overwrite(start, end, `'${normalizedPath}'`);
                   }
                 }
               },
